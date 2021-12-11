@@ -7,6 +7,7 @@
 
 import UIKit
 import CoreData
+import Firebase
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,6 +16,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+
+        FirebaseApp.configure()
+        
         return true
     }
 
@@ -31,6 +35,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
+    
+    var window: UIWindow?
+
+    //already exists
+//    //private
+//    func application(_ application: UIApplication,
+//      didFinishLaunchingWithOptions launchOptions:
+//                     [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+//      FirebaseApp.configure()
+//      return true
+//    }
 
     // MARK: - Core Data stack
 
@@ -79,3 +94,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 }
 
+
+//@UIApplicationMain
+//class AppDelegate: UIResponder, UIApplicationDelegate {
+//
+//  var window: UIWindow?
+//
+//  func application(_ application: UIApplication,
+//    didFinishLaunchingWithOptions launchOptions:
+//      [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+//    FirebaseApp.configure()
+//content_copy
+//
+//    return true
+//  }
+//}

@@ -17,6 +17,10 @@ class ViewController: UIViewController {
 
 }
 
+/*
+ view for presentation smth in the first (called) launch
+ */
+
 
 /*
  model - data

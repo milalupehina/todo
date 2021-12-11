@@ -7,12 +7,6 @@
 
 import Foundation
 //
-//  FirestoreManager.swift
-//  HSE
-//
-//  Created by Сергей Мирошниченко on 18.10.2021.
-//
-
 import FirebaseFirestore
 
 protocol FirestoreManagerProtocol: AnyObject {

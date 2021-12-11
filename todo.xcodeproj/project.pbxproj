@@ -149,13 +149,13 @@
 			path = "auth views";
 			sourceTree = "<group>";
 		};
-		AE1A06472764A5340050E686 /* managers */ = {
+		AE1A06472764A5340050E686 /* auth managers */ = {
 			isa = PBXGroup;
 			children = (
 				AE1A06482764A54C0050E686 /* AuthManager.swift */,
 				AE1A064C2764A5C50050E686 /* FirestoreManager.swift */,
 			);
-			path = managers;
+			path = "auth managers";
 			sourceTree = "<group>";
 		};
 		AEF2D0A72760F29300F0FA2A = {
@@ -181,7 +181,7 @@
 		AEF2D0B22760F29300F0FA2A /* todo */ = {
 			isa = PBXGroup;
 			children = (
-				AE1A06472764A5340050E686 /* managers */,
+				AE1A06472764A5340050E686 /* auth managers */,
 				AE1A06442764A4D20050E686 /* auth views */,
 				AEF2D0B32760F29300F0FA2A /* AppDelegate.swift */,
 				AEF2D0B52760F29300F0FA2A /* SceneDelegate.swift */,

@@ -55,6 +55,9 @@
 		AE1A06492764A54C0050E686 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1A06482764A54C0050E686 /* AuthManager.swift */; };
 		AE1A064B2764A5900050E686 /* SMSCodeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1A064A2764A5900050E686 /* SMSCodeVC.swift */; };
 		AE1A064D2764A5C50050E686 /* FirestoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1A064C2764A5C50050E686 /* FirestoreManager.swift */; };
+		AEA28715276DDFF700BC8EC8 /* ToDoListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEA28714276DDFF700BC8EC8 /* ToDoListRouter.swift */; };
+		AEA28717276DE00100BC8EC8 /* ToDoListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEA28716276DE00100BC8EC8 /* ToDoListPresenter.swift */; };
+		AEA28719276DE00C00BC8EC8 /* ToDoListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEA28718276DE00C00BC8EC8 /* ToDoListInteractor.swift */; };
 		AEF2D0B42760F29300F0FA2A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEF2D0B32760F29300F0FA2A /* AppDelegate.swift */; };
 		AEF2D0B62760F29300F0FA2A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEF2D0B52760F29300F0FA2A /* SceneDelegate.swift */; };
 		AEF2D0B82760F29300F0FA2A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEF2D0B72760F29300F0FA2A /* ViewController.swift */; };
@@ -108,6 +111,9 @@
 		AE1A06482764A54C0050E686 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		AE1A064A2764A5900050E686 /* SMSCodeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMSCodeVC.swift; sourceTree = "<group>"; };
 		AE1A064C2764A5C50050E686 /* FirestoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreManager.swift; sourceTree = "<group>"; };
+		AEA28714276DDFF700BC8EC8 /* ToDoListRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToDoListRouter.swift; sourceTree = "<group>"; };
+		AEA28716276DE00100BC8EC8 /* ToDoListPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToDoListPresenter.swift; sourceTree = "<group>"; };
+		AEA28718276DE00C00BC8EC8 /* ToDoListInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToDoListInteractor.swift; sourceTree = "<group>"; };
 		AEF2D0B02760F29300F0FA2A /* todo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = todo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AEF2D0B32760F29300F0FA2A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AEF2D0B52760F29300F0FA2A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -174,7 +180,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		AE132A22276A47310038E60E /* dementiafiles */ = {
+		AE132A22276A47310038E60E /* externalfiles */ = {
 			isa = PBXGroup;
 			children = (
 				AE132A2D276A478E0038E60E /* PillListDTO.swift */,
@@ -194,8 +200,9 @@
 				AE132A28276A478E0038E60E /* PillListRouter.swift */,
 				AE132A33276A478E0038E60E /* PillListCell.swift */,
 				AE132A2A276A478E0038E60E /* PillListAssembly.swift */,
+				AEA28713276DDFCE00BC8EC8 /* hsefiles */,
 			);
-			path = dementiafiles;
+			path = externalfiles;
 			sourceTree = "<group>";
 		};
 		AE1A06442764A4D20050E686 /* auth views */ = {
@@ -214,6 +221,16 @@
 				AE1A064C2764A5C50050E686 /* FirestoreManager.swift */,
 			);
 			path = "auth managers";
+			sourceTree = "<group>";
+		};
+		AEA28713276DDFCE00BC8EC8 /* hsefiles */ = {
+			isa = PBXGroup;
+			children = (
+				AEA28714276DDFF700BC8EC8 /* ToDoListRouter.swift */,
+				AEA28716276DE00100BC8EC8 /* ToDoListPresenter.swift */,
+				AEA28718276DE00C00BC8EC8 /* ToDoListInteractor.swift */,
+			);
+			path = hsefiles;
 			sourceTree = "<group>";
 		};
 		AEF2D0A72760F29300F0FA2A = {
@@ -242,7 +259,7 @@
 				AEF2D0B32760F29300F0FA2A /* AppDelegate.swift */,
 				AEF2D0B52760F29300F0FA2A /* SceneDelegate.swift */,
 				AEF2D0B72760F29300F0FA2A /* ViewController.swift */,
-				AE132A22276A47310038E60E /* dementiafiles */,
+				AE132A22276A47310038E60E /* externalfiles */,
 				AE1A06472764A5340050E686 /* auth managers */,
 				AE1A06442764A4D20050E686 /* auth views */,
 				AEF2D0B92760F29300F0FA2A /* Main.storyboard */,
@@ -441,6 +458,7 @@
 				AEF2D0B82760F29300F0FA2A /* ViewController.swift in Sources */,
 				AE1A064B2764A5900050E686 /* SMSCodeVC.swift in Sources */,
 				AE1A06492764A54C0050E686 /* AuthManager.swift in Sources */,
+				AEA28717276DE00100BC8EC8 /* ToDoListPresenter.swift in Sources */,
 				AE132A41276A478E0038E60E /* AddItemVC.swift in Sources */,
 				AE132A3E276A478E0038E60E /* PillListDTO.swift in Sources */,
 				AEF2D0B42760F29300F0FA2A /* AppDelegate.swift in Sources */,
@@ -450,11 +468,13 @@
 				AE132A3A276A478E0038E60E /* CustomVisualEffectView.swift in Sources */,
 				AE132A36276A478E0038E60E /* PillListVC.swift in Sources */,
 				AE132A3F276A478E0038E60E /* PillListInteractor.swift in Sources */,
+				AEA28719276DE00C00BC8EC8 /* ToDoListInteractor.swift in Sources */,
 				AE132A43276A478E0038E60E /* PillListPresenter.swift in Sources */,
 				AE132A34276A478E0038E60E /* SectionData.swift in Sources */,
 				AE132A39276A478E0038E60E /* PillListRouter.swift in Sources */,
 				AE132A35276A478E0038E60E /* PillListProtocols.swift in Sources */,
 				AE1A06462764A5030050E686 /* PhoneNumberVC.swift in Sources */,
+				AEA28715276DDFF700BC8EC8 /* ToDoListRouter.swift in Sources */,
 				AEF2D0BE2760F29300F0FA2A /* todo.xcdatamodeld in Sources */,
 				AE132A3B276A478E0038E60E /* PillListAssembly.swift in Sources */,
 				AE132A3D276A478E0038E60E /* MealPicker.swift in Sources */,

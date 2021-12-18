@@ -10,7 +10,7 @@ import UIKit
 protocol DropDownViewDelegate: AnyObject {
     func didSelect(_ type: PillListItem)
 }
-
+//MARK: dto
 final class DropDownView: UIView {
     
     weak var delegate: DropDownViewDelegate?

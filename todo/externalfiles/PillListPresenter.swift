@@ -6,7 +6,7 @@
 //
 
 final class PillListPresenter {
-
+//MARK: protocols models
      var view: PillListDisplayLogic?
 
      init() {}

@@ -16,7 +16,7 @@ final class PillListCell: UITableViewCell {
     static let id = "PillListCell"
     
     weak var delegate: PillListCellDelegate?
-    
+    //MARK: dto
     var model: PillListItem? {
         didSet {
             nameLabel.text = model?.name

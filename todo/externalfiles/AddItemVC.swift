@@ -9,7 +9,7 @@ import UIKit
 
 final class AddItemVC: UIViewController {
     
-    private let manager: FirestoreManagerProtocol = FirestoreManager(.pillList)
+    private let manager: FirestoreManagerProtocol = FirestoreManager(.pillList)//Type 'FirestoreManager.Collection' has no member 'pillList'
     
     private lazy var time = String("00:00 AM")
     
@@ -219,12 +219,12 @@ final class AddItemVC: UIViewController {
         let item = PillListItem(
             name: nameLabel.text ?? "Undefined",
             time: time,
-            quantity: (quantityLabel.text as NSString).floatValue ?? 0,
+            quantity: (quantityLabel.text as NSString).floatValue ?? 0,//Left side of nil coalescing operator '??' has non-optional type 'Float', so the right side is never used remove'?? 0'
             meal: mealPickerView.myDataSource[mealPickerView.selectedRow(inComponent: 0)] ?? "Doesn't metter"
-        )
-        manager.addItem(
+        )//Left side of nil coalescing operator '??' has non-optional type 'String', so the right side is never used Remove '?? "Doesn't metter"'
+        manager.addItem(//Value of type 'FirestoreManagerProtocol' has no member 'addItem'
             item,
-            merge: false) { [weak self] result in
+            merge: false) { [weak self] result in //Unable to infer type of a closure parameter 'result' in the current context
                 guard let self = self else { return }
                 switch result {
                 case .success(_):

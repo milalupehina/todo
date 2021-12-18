@@ -5,6 +5,7 @@
 //  Created by xcode on 29.11.2021.
 //
 
+//MARK: models
 protocol PillListDisplayLogic: AnyObject {
     func displayCells(_ viewModel: PillListModels.FetchItems.ViewModel)
     func displayUpdateItem(_ viewModel: PillListModels.UpdateItems.ViewModel)

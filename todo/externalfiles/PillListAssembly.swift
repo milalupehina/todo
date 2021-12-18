@@ -5,6 +5,8 @@
 //  Created by xcode on 29.11.2021.
 //
 
+//MARK: router presenter interpretator from hse pilllistvc - dementia
+
 enum PillListAssembly {
      static func assembly() -> PillListVC {
          let router = PillListRouter()

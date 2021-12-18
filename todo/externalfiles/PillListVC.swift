@@ -9,7 +9,7 @@
 import UIKit
 
 final class PillListVC: TableViewController<PillListItem, PillListCell> {
-    
+    //MARK: protocols
     private let interactor: PillListBusinessLogic
     private let router: PillListRoutingLogic
     
@@ -39,7 +39,7 @@ final class PillListVC: TableViewController<PillListItem, PillListCell> {
          self.router = router
          super.init([]) { cell, item in
               cell.model = item
-             } 
+         } //didTap: <#(PillListCell) -> PillListCell#>
      }
 
     @available (*, unavailable)
@@ -166,7 +166,7 @@ extension PillListVC {
  extension UIWindow {
      static var key: UIWindow? {
          if #available(iOS 13, *) {
-             return UIApplication.shared.windows.first { $0.isKeyWindow }
+             return UIApplication.shared.windows.first { $0.isKeyWindow }//'windows' was deprecated in iOS 15.0: Use UIWindowScene.windows on a relevant window scene instead
          } else {
              return UIApplication.shared.keyWindow
          }

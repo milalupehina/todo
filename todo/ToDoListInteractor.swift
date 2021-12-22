@@ -1,12 +1,11 @@
 //
 //  ToDoListInteractor.swift
-//  HSE
+//  todo
 //
-//  Created by Сергей Мирошниченко on 30.10.2021.
+//  Created by xcode on 20.12.2021.
 //
 
-
-
+import Foundation
 final class ToDoListInteractor {
     
     private let presenter: ToDoListPresentationLogic
@@ -51,7 +50,7 @@ extension ToDoListInteractor: ToDoListBusinessLogic {
                     }
                 }
         case .delete:
-            manager.deleteItem(request.item ?? ToDoListItem.prototype()) { [weak self] result in
+            manager.deleteItem(request.item ?? ToDoListItem.prototype()) { [weak self] result in 
                 self?.presenter.presentLoad(.init(show: false))
                 switch result {
                 case .success(_):

@@ -29,12 +29,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 vc.title = "Sign In"
                 let navVC = UINavigationController(rootViewController: vc)
                 window.rootViewController = navVC
+            } else {
+                let vc = ToDoListAssembly.assembly()
+                let navVC = UINavigationController(rootViewController: vc)
+                window.rootViewController = navVC
             }
-//            } else {
-//                let vc = ToDoListAssembly.assembly()
-//                let navVC = UINavigationController(rootViewController: vc)
-//                window.rootViewController = navVC
-//            }
             //9103984268
             //111111
             

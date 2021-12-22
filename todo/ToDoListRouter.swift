@@ -1,10 +1,11 @@
 //
 //  ToDoListRouter.swift
-//  HSE
+//  todo
 //
-//  Created by Сергей Мирошниченко on 30.10.2021.
+//  Created by xcode on 20.12.2021.
 //
 
+import Foundation
 import UIKit
 
 
@@ -17,7 +18,12 @@ final class ToDoListRouter {
 
 // MARK: - Routing Logic
 
-extension ToDoListRouter: ToDoListRoutingLogic {
+extension ToDoListRouter: ToDoListRoutingLogic { //Type 'ToDoListRouter' does not conform to protocol 'ToDoListRoutingLogic'
+    //fix->
+//    func routeToSettings() {
+//        <#code#>
+//    }
+    
     func routeToAddItem(callback: @escaping () -> Void) {
         let vc = AddItemVC(callback)
         vc.modalPresentationStyle = .overCurrentContext

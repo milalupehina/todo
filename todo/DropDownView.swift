@@ -1,30 +1,33 @@
-
-//  DropDownView.swift
-//  hiDementia
 //
-//  Created by xcode on 01.12.2021.
+//  DropDownView.swift
+//  todo
+//
+//  Created by xcode on 20.12.2021.
+//
 
-
+import Foundation
 import UIKit
 
 protocol DropDownViewDelegate: AnyObject {
-    func didSelect(_ type: PillListItem)
+    func didSelect(_ type: ToDoListItem.ItemPriority)
 }
-//MARK: dto
+
 final class DropDownView: UIView {
     
     weak var delegate: DropDownViewDelegate?
     
     private struct Item {
+        let type: ToDoListItem.ItemPriority
         let name: String
+        let image: UIImage
     }
-//
+    
     private let id = "dropCell"
-//
+    
     private let items = [
-        Item(name: "Высокий приоритет"),
-        Item(name: "Средний приоритет"),
-        Item(name: "Низкий приоритет"),
+        Item(type: .high, name: "Высокий приоритет", image: UIColor.red.image()),
+        Item(type: .normal, name: "Средний приоритет", image: UIColor.yellow.image()),
+        Item(type: .low, name: "Низкий приоритет", image: UIColor.green.image()),
     ]
     
     private lazy var tableView: UITableView = {
@@ -59,8 +62,8 @@ final class DropDownView: UIView {
 extension DropDownView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath) as UITableViewCell
-//        cell.imageView?.image = items[indexPath.row].image
-//        cell.nameLabel?.text = items[indexPath.row].name
+        cell.imageView?.image = items[indexPath.row].image
+        cell.textLabel?.text = items[indexPath.row].name
         return cell
     }
     
@@ -72,17 +75,17 @@ extension DropDownView: UITableViewDelegate, UITableViewDataSource {
         items.count
     }
     
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        tableView.deselectRow(at: indexPath, animated: true)
-//        if self.superview != nil {
-//            UIView.animate(
-//                withDuration: 0.5,
-//                delay: 0,
-//                options: .curveEaseOut
-//            ) {
-//                self.removeFromSuperview()
-//            }
-//        }
-//        delegate?.didSelect(items[indexPath.row])
-//    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        if self.superview != nil {
+            UIView.animate(
+                withDuration: 0.5,
+                delay: 0,
+                options: .curveEaseOut
+            ) {
+                self.removeFromSuperview()
+            }
+        }
+        delegate?.didSelect(items[indexPath.row].type)
+    }
 }

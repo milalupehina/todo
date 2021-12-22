@@ -1,17 +1,16 @@
 //
 //  AddItemVC.swift
-//  hiDementia
+//  todo
 //
-//  Created by xcode on 01.12.2021.
+//  Created by xcode on 20.12.2021.
 //
 
+import Foundation
 import UIKit
 
 final class AddItemVC: UIViewController {
     
-    private let manager: FirestoreManagerProtocol = FirestoreManager(.pillList)//Type 'FirestoreManager.Collection' has no member 'pillList'
-    
-    private lazy var time = String("00:00 AM")
+    private let manager: FirestoreManagerProtocol = FirestoreManager(.toDoList)
     
     private lazy var blurredView: UIView = {
         let containerView = UIView()
@@ -26,21 +25,10 @@ final class AddItemVC: UIViewController {
         return containerView
     }()
     
-    private lazy var timeStackView: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [
-            timeTextField,
-            timePicker,
-        ])
-        stack.axis = .horizontal
-        return stack
-    }()
-    
     private lazy var vStackView: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [
-            nameLabel,
-            quantityLabel,
-            timeStackView,
-            mealPickerView,
+            titleLabel,
+            descLabel,
             hStackView
         ])
         stack.layoutMargins = UIEdgeInsets(top: 16, left: 16, bottom: 0, right: 16)
@@ -58,6 +46,7 @@ final class AddItemVC: UIViewController {
     
     private lazy var hStackView: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [
+            priorityButton,
             sendButton
         ])
         stack.axis = .horizontal
@@ -68,7 +57,7 @@ final class AddItemVC: UIViewController {
         return stack
     }()
     
-    private lazy var nameLabel: UITextView = {
+    private lazy var titleLabel: UITextView = {
         let label = UITextView()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.isScrollEnabled = false
@@ -76,7 +65,7 @@ final class AddItemVC: UIViewController {
         return label
     }()
     
-    private lazy var quantityLabel: UITextView = {
+    private lazy var descLabel: UITextView = {
         let label = UITextView()
         label.isScrollEnabled = false
         label.font = .systemFont(ofSize: 16)
@@ -84,47 +73,26 @@ final class AddItemVC: UIViewController {
         return label
     }()
     
-    private lazy var timeTextField: UITextField = {
-        let textField = UITextField()
-        textField.text = "Time of tacking pill:"
-        return textField
+    private lazy var priorityButton: UIButton = {
+        let button = UIButton()
+        button.setImage(
+            UIImage(systemName: "tag.circle"),
+            for: .normal
+        )
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(
+            self,
+            action: #selector(openDropDownView),
+            for: .touchUpInside
+        )
+        return button
     }()
     
-    private lazy var timePicker: UIDatePicker = {
-        let picker = UIDatePicker()
-        picker.datePickerMode = .time
-        picker.frame = CGRect(x: 0, y: 50, width: self.view.frame.width, height: 200)
-        picker.addTarget(self, action: #selector(self.handler(sender:)), for: UIControl.Event.valueChanged)
-        return picker
+    private lazy var priorityDropDownView: DropDownView = {
+        let view = DropDownView()
+        view.delegate = self
+        return view
     }()
-    
-    private lazy var mealPickerView: MealPickerView = {
-        let picker = MealPickerView()
-        picker.frame = CGRect(x: 0, y: 50, width: self.view.frame.width, height: 200)
-        return picker
-    }()
-    
-    
-//    private lazy var priorityButton: UIButton = {
-//        let button = UIButton()
-//        button.setImage(
-//            UIImage(systemName: "tag.circle"),
-//            for: .normal
-//        )
-//        button.translatesAutoresizingMaskIntoConstraints = false
-//        button.addTarget(
-//            self,
-//            action: #selector(openDropDownView),
-//            for: .touchUpInside
-//        )
-//        return button
-//    }()
-//
-//    private lazy var priorityDropDownView: DropDownView = {
-//        let view = DropDownView()
-//        view.delegate = self
-//        return view
-//    }()
     
     private lazy var sendButton: UIButton = {
         let button = UIButton()
@@ -142,6 +110,7 @@ final class AddItemVC: UIViewController {
     }()
     
     private var bottomLayoutConstraint: NSLayoutConstraint?
+    private var type: ToDoListItem.ItemPriority?
     
     private let callback: () -> Void
     
@@ -157,11 +126,7 @@ final class AddItemVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        nameLabel.becomeFirstResponder()
-        
-        mealPickerView.dataSource = mealPickerView
-        mealPickerView.delegate = mealPickerView
-        
+        titleLabel.becomeFirstResponder()
         setupUI()
         
         NotificationCenter.default.addObserver(
@@ -198,50 +163,49 @@ final class AddItemVC: UIViewController {
         hStackView.heightAnchor.constraint(equalToConstant: 40).isActive = true
     }
     
-    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        nameLabel.placeholder = "Pill name"
-        quantityLabel.placeholder = "Pills quantity" //may be implement plus-minus interface
-        
-    }
-    
-    // function for geting value from timePicker
-    @objc
-    private func handler(sender: UIDatePicker) {
-        let timeFormatter = DateFormatter()
-        timeFormatter.timeStyle = DateFormatter.Style.short
-        time = timeFormatter.string(from: timePicker.date)
+        titleLabel.placeholder = "напр., Читать главу книги каждый день в 20:30" //Value of type 'UITextView' has no member 'placeholder' -> override in textview+ext
+        descLabel.placeholder = "Описание" //Value of type 'UITextView' has no member 'placeholder'
     }
     
     @objc
     private func sendBtnPressed() {
-        let item = PillListItem(
-            name: nameLabel.text ?? "Undefined",
-            time: time,
-            quantity: (quantityLabel.text as NSString).floatValue ?? 0,//Left side of nil coalescing operator '??' has non-optional type 'Float', so the right side is never used remove'?? 0'
-            meal: mealPickerView.myDataSource[mealPickerView.selectedRow(inComponent: 0)] ?? "Doesn't metter"
-        )//Left side of nil coalescing operator '??' has non-optional type 'String', so the right side is never used Remove '?? "Doesn't metter"'
-        manager.addItem(//Value of type 'FirestoreManagerProtocol' has no member 'addItem'
+        let item = ToDoListItem(
+            title: titleLabel.text ?? "Без названия",
+            description: descLabel.text ?? "Без описания",
+            imageName: "",
+            priority: type ?? .normal
+        )
+        manager.addItem(
             item,
-            merge: false) { [weak self] result in //Unable to infer type of a closure parameter 'result' in the current context
+            merge: false) { [weak self] result in
                 guard let self = self else { return }
                 switch result {
                 case .success(_):
                     self.dismiss(animated: true)
                     self.callback()
                 case .failure(let error):
-//                    self.alert(
-//                        title: "Oups, ERROR",
-//                        desc: error.localizedDescription
-//                    )
-                    print("Ops")
+                    self.alert(
+                        title: "Oups, ERROR",
+                        desc: error.localizedDescription
+                    )
                 }
             }
-        //callback(item)
     }
     
-    
+    @objc
+    private func openDropDownView() {
+        if priorityDropDownView.superview == nil {
+            view.addSubview(priorityDropDownView)
+            priorityDropDownView.frame = CGRect(
+                x: vStackView.frame.width/4,
+                y: vStackView.frame.origin.y - 166,
+                width: 250,
+                height: 140
+            )
+        }
+    }
     
     @objc
     private func dismissTap() {
@@ -249,8 +213,13 @@ final class AddItemVC: UIViewController {
     }
 }
 
-extension AddItemVC {
-    
+extension AddItemVC: DropDownViewDelegate {
+    func didSelect(_ type: ToDoListItem.ItemPriority) {
+        self.type = type
+    }
+}
+
+private extension AddItemVC {
     private func setButtonConstraint(offset: CGFloat) {
         if let constraint = bottomLayoutConstraint {
             view.removeConstraint(constraint)

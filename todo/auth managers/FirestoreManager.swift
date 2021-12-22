@@ -10,16 +10,16 @@ import Foundation
 import FirebaseFirestore
 
 protocol FirestoreManagerProtocol: AnyObject {
-//    func read(completion: @escaping (Result<[ToDoListItem], Error>) -> Void)
-//    func addItem(
-//        _ item: ToDoListItem,
-//        merge: Bool,
-//        completion: @escaping (Result<Bool, Error>) -> Void
-//    )
-//    func deleteItem(
-//        _ item: ToDoListItem,
-//        completion: @escaping (Result<Bool, Error>) -> Void
-//    )
+    func read(completion: @escaping (Result<[ToDoListItem], Error>) -> Void)
+    func addItem(
+        _ item: ToDoListItem,
+        merge: Bool,
+        completion: @escaping (Result<Bool, Error>) -> Void
+    )
+    func deleteItem(
+        _ item: ToDoListItem,
+        completion: @escaping (Result<Bool, Error>) -> Void
+    )
 }
 
 final class FirestoreManager: FirestoreManagerProtocol {
@@ -35,37 +35,37 @@ final class FirestoreManager: FirestoreManagerProtocol {
         self.collection = collection
     }
     
-//    func read(completion: @escaping (Result<[ToDoListItem], Error>) -> Void) {
-//        db.collection(collection.rawValue).getDocuments { snapshot, error in
-//            if let error = error {
-//                DispatchQueue.main.async { completion(.failure(error)) }
-//            }
-//            let items = snapshot?.documents.compactMap { document -> ToDoListItem? in
-//                try? document.data(as: ToDoListItem.self)
-//            }
-//            DispatchQueue.main.async { completion(.success(items ?? [])) }
-//        }
-//    }
+    func read(completion: @escaping (Result<[ToDoListItem], Error>) -> Void) {
+        db.collection(collection.rawValue).getDocuments { snapshot, error in
+            if let error = error {
+                DispatchQueue.main.async { completion(.failure(error)) }
+            }
+            let items = snapshot?.documents.compactMap { document -> ToDoListItem? in
+                try? document.data(as: ToDoListItem.self)
+            }
+            DispatchQueue.main.async { completion(.success(items ?? [])) }
+        }
+    }
     
-//    func addItem(_ item: ToDoListItem, merge: Bool, completion: @escaping (Result<Bool, Error>) -> Void) {
-//        do {
-//            try db.collection(collection.rawValue).document(item.id ?? "").setData(from: item, merge: merge) { error in
-//                if let error = error {
-//                    DispatchQueue.main.async { completion(.failure(error)) }
-//                }
-//                DispatchQueue.main.async { completion(.success(true)) }
-//            }
-//        } catch let error {
-//            DispatchQueue.main.async { completion(.failure(error)) }
-//        }
-//    }
+    func addItem(_ item: ToDoListItem, merge: Bool, completion: @escaping (Result<Bool, Error>) -> Void) {
+        do {
+            try db.collection(collection.rawValue).document(item.id ?? "").setData(from: item, merge: merge) { error in
+                if let error = error {
+                    DispatchQueue.main.async { completion(.failure(error)) }
+                }
+                DispatchQueue.main.async { completion(.success(true)) }
+            }
+        } catch let error {
+            DispatchQueue.main.async { completion(.failure(error)) }
+        }
+    }
     
-//    func deleteItem(_ item: ToDoListItem, completion: @escaping (Result<Bool, Error>) -> Void) {
-//        db.collection(collection.rawValue).document(item.id ?? "").delete() { error in
-//            if let error = error {
-//                DispatchQueue.main.async { completion(.failure(error)) }
-//            }
-//            DispatchQueue.main.async { completion(.success(true)) }
-//        }
-//    }
+    func deleteItem(_ item: ToDoListItem, completion: @escaping (Result<Bool, Error>) -> Void) {
+        db.collection(collection.rawValue).document(item.id ?? "").delete() { error in
+            if let error = error {
+                DispatchQueue.main.async { completion(.failure(error)) }
+            }
+            DispatchQueue.main.async { completion(.success(true)) }
+        }
+    }
 }

@@ -1,0 +1,65 @@
+//
+//  ToDoListInteractor.swift
+//  todo
+//
+//  Created by xcode on 20.12.2021.
+//
+
+import Foundation
+final class ToDoListInteractor {
+    
+    private let presenter: ToDoListPresentationLogic
+    
+    private let manager: FirestoreManagerProtocol = FirestoreManager(.toDoList)
+    
+    init(_ presenter: ToDoListPresentationLogic) {
+        self.presenter = presenter
+    }
+}
+
+// MARK: - Business Logic
+
+// protocol ToDoListBussinessLogic from ToDoListProtocols
+
+
+extension ToDoListInteractor: ToDoListBusinessLogic {
+    func fetchItems(_ request: ToDoListModels.FetchItems.Request) {
+        presenter.presentLoad(.init(show: true))
+        switch request.action {
+        case .all:
+            manager.read { [weak self] result in
+                self?.presenter.presentLoad(.init(show: false))
+                switch result {
+                case .success(let items):
+                    self?.presenter.presentCells(.init(items: items))
+                case .failure(let error):
+                    self?.presenter.presentError(.init(title: error.localizedDescription))
+                }
+            }
+        case .add, .edit:
+            manager.addItem(
+                request.item ?? ToDoListItem.prototype(),
+                merge: (request.action == .edit)) { [weak self] result in
+                    self?.presenter.presentLoad(.init(show: false))
+                    switch result {
+                    case .success(_):
+                        guard let item = request.item else { return }
+                        self?.presenter.presentUpdate(.init(item: item))
+                    case .failure(let error):
+                        self?.presenter.presentError(.init(title: error.localizedDescription))
+                    }
+                }
+        case .delete:
+            manager.deleteItem(request.item ?? ToDoListItem.prototype()) { [weak self] result in 
+                self?.presenter.presentLoad(.init(show: false))
+                switch result {
+                case .success(_):
+                    guard let item = request.item else { return }
+                    self?.presenter.presentUpdate(.init(item: item))
+                case .failure(let error):
+                    self?.presenter.presentError(.init(title: error.localizedDescription))
+                }
+            }
+        }
+    }
+}

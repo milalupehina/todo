@@ -148,15 +148,31 @@ extension ToDoListVC {
         true
     }
     
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if (editingStyle == .delete) {
-            interactor.fetchItems(.init(items[indexPath.row], .delete))
-            items.remove(at: indexPath.row)
-            tableView.beginUpdates()
-            tableView.deleteRows(at: [indexPath], with: .middle)
-            tableView.endUpdates()
-        }
-    }
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+           let editAction = UIContextualAction(style: .normal, title: "Edit") { (action, view, completion) in
+             // Perform your action here
+               completion(true)
+           }
+
+             let deleteAction = UIContextualAction(style: .normal, title: "Delete") { [self] (action, view, completion) in
+               self.interactor.fetchItems(.init(items[indexPath.row], .delete))
+               items.remove(at: indexPath.row)
+               tableView.beginUpdates()
+               tableView.deleteRows(at: [indexPath], with: .middle)
+               tableView.endUpdates()
+               completion(true)
+           }
+
+           //deleteAction.image = UIImage(named: "icon.png")
+           
+
+           editAction.backgroundColor = UIColor.green
+           deleteAction.backgroundColor = UIColor.red
+        
+        
+           return UISwipeActionsConfiguration(actions: [editAction, deleteAction])
+         }
+     
 }
 
 // MARK: - Setup UI components

@@ -9,25 +9,32 @@ import Foundation
 import UIKit
 
 protocol DropDownViewDelegate: AnyObject {
+    //priority
     func didSelect(_ type: ToDoListItem.ItemPriority)
+//    func didSelect(_ type: ToDoListItem)//.ItemPriority)
 }
 
 final class DropDownView: UIView {
     
     weak var delegate: DropDownViewDelegate?
     
+    //priority
     private struct Item {
+        
         let type: ToDoListItem.ItemPriority
         let name: String
         let image: UIImage
     }
     
     private let id = "dropCell"
-    
+    //priority
     private let items = [
-        Item(type: .high, name: "Высокий приоритет", image: UIColor.red.image()),
-        Item(type: .normal, name: "Средний приоритет", image: UIColor.yellow.image()),
-        Item(type: .low, name: "Низкий приоритет", image: UIColor.green.image()),
+        Item(type: .high, name: "Высокий приоритет", image: UIColor.red.image()),//
+        Item(type: .normal, name: "Средний приоритет", image: UIColor.yellow.image()),//
+        Item(type: .low, name: "Низкий приоритет", image: UIColor.green.image()),//
+//        Item(name: "Высокий приоритет", image: UIColor.red.image()),//type: .high,
+//        Item(name: "Средний приоритет", image: UIColor.yellow.image()),//type: .normal,
+//        Item(name: "Низкий приоритет", image: UIColor.green.image()),//type: .low,
     ]
     
     private lazy var tableView: UITableView = {
@@ -86,6 +93,8 @@ extension DropDownView: UITableViewDelegate, UITableViewDataSource {
                 self.removeFromSuperview()
             }
         }
+        //priority
+        //delegate?.didSelect(items[indexPath.row].type)
         delegate?.didSelect(items[indexPath.row].type)
     }
 }

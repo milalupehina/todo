@@ -20,6 +20,7 @@ final class ToDoListCell: UITableViewCell {
             if let image = UIImage(systemName: model?.imageName ?? "") {
                 leftImageView.image = image
             }
+            //priority circle
 //            //priority circle
 //            switch model?.priority {
 //            case .low:
@@ -31,6 +32,17 @@ final class ToDoListCell: UITableViewCell {
 //            default:
 //                break
 //            }
+            switch model?.priority {
+            case .low:
+                priorityView.backgroundColor = .green
+            case .normal:
+                priorityView.backgroundColor = .yellow
+            case .high:
+                priorityView.backgroundColor = .red
+            default:
+                break
+            }
+            
         }
     }
     
@@ -73,6 +85,12 @@ final class ToDoListCell: UITableViewCell {
 //        view.layer.cornerRadius = 25
 //        return view
 //    }()
+    private lazy var priorityView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.layer.cornerRadius = 25
+        return view
+    }()
     
     // расположение элементов вертикальное
     private lazy var vStackView: UIStackView = {
@@ -95,9 +113,9 @@ final class ToDoListCell: UITableViewCell {
                 //left pic
                 leftImageView,
                 //вертикальное расположение
-                vStackView//,
+                vStackView,
                 //priority circle
-                //priorityView
+                priorityView
             ]
         )
         stack.translatesAutoresizingMaskIntoConstraints = false
@@ -115,9 +133,9 @@ final class ToDoListCell: UITableViewCell {
         hStackView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
 
         //left pic
-        //leftImageView.widthAnchor.constraint(equalTo: heightAnchor).isActive = true
+        leftImageView.widthAnchor.constraint(equalTo: heightAnchor).isActive = true
         //priority
-        //priorityView.widthAnchor.constraint(equalTo: heightAnchor).isActive = true
+        priorityView.widthAnchor.constraint(equalTo: heightAnchor).isActive = true
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

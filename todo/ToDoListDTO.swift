@@ -9,19 +9,21 @@ import Foundation
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
+//priority
+
 struct ToDoListItem: Codable {
     @DocumentID var id: String? = UUID().uuidString
     let title: String
     let description: String
     let imageName: String?
     let time: String
-    //let priority: ItemPriority
+    let priority: ItemPriority
     
-//    enum ItemPriority: String, Codable, CaseIterable {
-//        case low
-//        case normal
-//        case high
-//    }
+    enum ItemPriority: String, Codable, CaseIterable {
+        case low
+        case normal
+        case high
+    }
 }
 
 extension ToDoListItem {
@@ -31,8 +33,8 @@ extension ToDoListItem {
             title: "",
             description: "",
             imageName: nil,
-            time: ""//,
-            //priority: .normal
+            time: "",
+            priority: .normal
         )
     }
 }

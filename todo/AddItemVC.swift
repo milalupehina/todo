@@ -11,6 +11,7 @@ import UIKit
 final class AddItemVC: UIViewController {
     
     private let manager: FirestoreManagerProtocol = FirestoreManager(.toDoList)
+    private lazy var time = String("00:00 AM")
     
     private lazy var blurredView: UIView = {
         let containerView = UIView()
@@ -25,10 +26,20 @@ final class AddItemVC: UIViewController {
         return containerView
     }()
     
+    private lazy var timeStackView: UIStackView = {
+             let stack = UIStackView(arrangedSubviews: [
+                 timeTextField,
+                 timePicker,
+             ])
+             stack.axis = .horizontal
+             return stack
+         }()
+    
     private lazy var vStackView: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [
             titleLabel,
             descLabel,
+            timeStackView,
             hStackView
         ])
         stack.layoutMargins = UIEdgeInsets(top: 16, left: 16, bottom: 0, right: 16)
@@ -44,6 +55,21 @@ final class AddItemVC: UIViewController {
         return stack
     }()
     
+    private lazy var timeTextField: UITextField = {
+             let textField = UITextField()
+             textField.text = "Due:"
+             return textField
+         }()
+    
+    private lazy var timePicker: UIDatePicker = {
+            let picker = UIDatePicker()
+            picker.datePickerMode = .time
+            picker.frame = CGRect(x: 0, y: 50, width: self.view.frame.width, height: 200)
+            picker.addTarget(self, action: #selector(self.handler(sender:)), for: UIControl.Event.valueChanged)
+            return picker
+        }()
+    
+    //priorityButton,
     private lazy var hStackView: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [
             priorityButton,
@@ -73,6 +99,7 @@ final class AddItemVC: UIViewController {
         return label
     }()
     
+    //start priority
     private lazy var priorityButton: UIButton = {
         let button = UIButton()
         button.setImage(
@@ -94,6 +121,8 @@ final class AddItemVC: UIViewController {
         return view
     }()
     
+    //fin priority
+    
     private lazy var sendButton: UIButton = {
         let button = UIButton()
         button.setImage(
@@ -109,6 +138,7 @@ final class AddItemVC: UIViewController {
         return button
     }()
     
+    //priority
     private var bottomLayoutConstraint: NSLayoutConstraint?
     private var type: ToDoListItem.ItemPriority?
     
@@ -169,12 +199,23 @@ final class AddItemVC: UIViewController {
         descLabel.placeholder = "Описание" //Value of type 'UITextView' has no member 'placeholder'
     }
     
+    // function for geting value from timePicker
+         @objc
+         private func handler(sender: UIDatePicker) {
+             let timeFormatter = DateFormatter()
+             timeFormatter.timeStyle = DateFormatter.Style.short
+             time = timeFormatter.string(from: timePicker.date)
+         }
+    
+    
+    //priority
     @objc
     private func sendBtnPressed() {
         let item = ToDoListItem(
             title: titleLabel.text ?? "Без названия",
             description: descLabel.text ?? "Без описания",
             imageName: "",
+            time: time,
             priority: type ?? .normal
         )
         manager.addItem(
@@ -194,6 +235,8 @@ final class AddItemVC: UIViewController {
             }
     }
     
+    
+    //priority
     @objc
     private func openDropDownView() {
         if priorityDropDownView.superview == nil {
@@ -206,6 +249,7 @@ final class AddItemVC: UIViewController {
             )
         }
     }
+    //priority
     
     @objc
     private func dismissTap() {
@@ -213,11 +257,13 @@ final class AddItemVC: UIViewController {
     }
 }
 
+//priority
 extension AddItemVC: DropDownViewDelegate {
     func didSelect(_ type: ToDoListItem.ItemPriority) {
         self.type = type
     }
 }
+//priority
 
 private extension AddItemVC {
     private func setButtonConstraint(offset: CGFloat) {
